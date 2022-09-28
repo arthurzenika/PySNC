@@ -239,6 +239,24 @@ class TableAPI(APIClient):
         self._validate_response(r)
         return r
 
+
+class ActionsAPI(APIClient):
+
+    def _target(self, value=None):
+        target = "{url}/api/ui/ui_action".format(url=self.__instance)
+        if value:
+            target = "/{}".format(value)
+        return target
+
+    def for_list_banner(self):
+        target = self._target('for_list_banner')
+        r = self.session.get()
+
+    def execute(self, record, action_id, data={}):
+        target = self._target(action_id)
+        params = dict(sysparm_table=record.table, sysparm_sys_id=record.sys_id)
+        r = self.session.post(target, params=params, json=data)
+
 class AttachmentAPI(APIClient):
     API_VERSION = 'v1'
 

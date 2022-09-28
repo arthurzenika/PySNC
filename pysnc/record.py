@@ -611,6 +611,13 @@ class GlideRecord(object):
         """
         self.__query.add_not_null_query(field)
 
+    def execute_ui_action(self, ui_action_sysid):
+        """
+        For the current record, execute the given ui action
+        :param ui_action_sysid: action to execute
+        """
+        assert ui_action_sysid, "Must provide a ui action"
+
     def _serialize(self, record, display_value, fields=None, changes_only=False):
         if isinstance(display_value, string_types):
             v_type = 'both'
@@ -898,7 +905,7 @@ class GlideElement(object):
 
     def changes(self):
         """
-        :return: if we have changed this value
+        :return: if we have changed any value on the the current record
         :rtype: bool
         """
         return self._changed
